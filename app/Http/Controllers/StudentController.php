@@ -11,10 +11,16 @@ use Inertia\Inertia;
 class StudentController extends Controller
 {
     // แสดงรายชื่อนักศึกษาทั้งหมด
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::with('registers.course')->get(); // ดึงข้อมูลนักศึกษาพร้อมกับข้อมูลที่ลงทะเบียน
-        return Inertia::render('Student/Index', ['students' => $students]); // ส่งข้อมูลไปที่หน้า Student/Index
+        $query = Student::with('registers.course');
+
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $students = $query->get();
+        return Inertia::render('Student/Index', ['students' => $students]);
     }
 
     public function create()

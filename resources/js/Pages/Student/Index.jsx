@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { usePage } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -7,6 +7,11 @@ import Swal from 'sweetalert2';
 
 export default function Index() {
     const { students } = usePage().props;
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredStudents = students.filter(student =>
+        student.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const editStudent = (id) => {
         Inertia.get(`/students/${id}/edit`);
@@ -46,6 +51,13 @@ export default function Index() {
         >
             <Head title="รายชื่อนักศึกษา" />
             <div className="container mx-auto p-8 bg-gray-100 shadow-lg rounded-lg">
+                <input
+                    type="text"
+                    placeholder="ค้นหานักศึกษา"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="mb-4 p-2 border rounded w-full"
+                />
                 <table className="min-w-full bg-white shadow-md rounded-lg">
                     <thead>
                         <tr className="bg-blue-500 text-white">
@@ -57,7 +69,7 @@ export default function Index() {
                         </tr>
                     </thead>
                     <tbody>
-                        {students.map((student) => (
+                        {filteredStudents.map((student) => (
                             <tr key={student.id} className="border-b">
                                 <td className="py-3 px-4">{student.name}</td>
                                 <td className="py-3 px-4">{student.email}</td>
