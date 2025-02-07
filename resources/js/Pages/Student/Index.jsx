@@ -61,6 +61,7 @@ export default function Index() {
                 <table className="min-w-full bg-white shadow-md rounded-lg">
                     <thead>
                         <tr className="bg-blue-500 text-white">
+                            <td className="py-3 px-4 text-left">ID</td>
                             <th className="py-3 px-4 text-left">ชื่อ</th>
                             <th className="py-3 px-4 text-left">อีเมล</th>
                             <th className="py-3 px-4 text-left">วันเกิด</th>
@@ -71,6 +72,7 @@ export default function Index() {
                     <tbody>
                         {filteredStudents.map((student) => (
                             <tr key={student.id} className="border-b">
+                                <td className="py-3 px-4">{student.id}</td>
                                 <td className="py-3 px-4">{student.name}</td>
                                 <td className="py-3 px-4">{student.email}</td>
                                 <td className="py-3 px-4">{student.dob}</td>

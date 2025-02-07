@@ -33,8 +33,8 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:students',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:students|max:255',
             'dateOfBirth' => 'required|date',
             'registeredCourse' => 'required|exists:courses,id',
         ]);
